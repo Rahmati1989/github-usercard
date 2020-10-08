@@ -3,7 +3,7 @@
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
-axios.get('https://api.github.com/users.Rahmati1989')
+axios.get('https://api.github.com/users/Rahmati1989')
 .then((response)=>{
   console.log(response)
   const data = response.data;
@@ -62,7 +62,24 @@ function cardMaker(){
   const bio = document.createElement('p')
   biography.textContent = `${data.bio}`
   cardinfo.appendChild(bio)
+
+  return card;
 }
+
+const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell']
+i = 0;
+followersArray.forEach((user,i)=>{
+  axios.get('https://api.github.com/users/Rahmati1989')
+  .then((response)=>{
+    const data = response.data
+    const divcard = document.querySelector('.card')
+    divcard.appendChild(cardMaker(data))
+  })
+  .catch(()=>{
+    console.log("Unsuccessfully loaded the card");
+  })
+})
+
 
 /*;
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -88,7 +105,7 @@ function cardMaker(){
     user, and adding that card to the DOM.
 */
 
-const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
+
 
   
 
