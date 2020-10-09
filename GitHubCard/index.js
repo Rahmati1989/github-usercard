@@ -3,10 +3,11 @@
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+let data = "";
 axios.get('https://api.github.com/users/Rahmati1989')
 .then((response)=>{
-  console.log(response)
-  const data = response.data;
+  console.log(response.data)
+  data = response.data;
   const cardDiv = document.querySelector('.cards');
   cardDiv.appendChild(cardMaker(data));
 })
@@ -15,12 +16,12 @@ axios.get('https://api.github.com/users/Rahmati1989')
   console.log(error)
 })
 
-function cardMaker(){
+function cardMaker(carddata){
   const card = document.createElement('div')
-  container.classList.add('card')
+  card.classList.add('card')
 
   const image = document.createElement('img')
-  image.src = `${data.image_url}`;
+  image.src = `${carddata.avatar_url}`;
   card.appendChild(image)
   
 
@@ -30,16 +31,16 @@ function cardMaker(){
 
   const title = document.createElement('h3');
   title.classList.add('name')
-  title.textContent = `${data.name}`;
+  title.textContent = `${carddata.name}`;
   cardinfo.appendChild(title);
 
   const username = document.createElement('p');
   username.classList.add('username')
-  username.textContent = `${data.login}`;
+  username.textContent = `${carddata.login}`;
   cardinfo.appendChild(username)
 
   const location = document.createElement('p')
-  location.textContent = `${data.location}`
+  location.textContent = `${carddata.location}`
   cardinfo.appendChild(location)
 
   const profile = document.createElement('p')
@@ -47,36 +48,42 @@ function cardMaker(){
   cardinfo.appendChild(profile)
 
   const link = document.createElement('a')
-  link.setAttribute = ('href', data.html_url)
-  link.textContent = `${data.html_url}`;
+  link.setAttribute = ('href', carddata.html_url)
+  link.textContent = `${carddata.html_url}`;
   profile.appendChild(link)
 
   const followers = document.createElement('p');
-  followers.textContent = `${data.followers}`;
+  followers.textContent = `${carddata.followers}`;
   cardinfo.appendChild(followers)
 
   const following = document.createElement('p')
-  following.textContent = `${data.following}`
+  following.textContent = `${carddata.following}`
   cardinfo.appendChild(following)
 
   const bio = document.createElement('p')
-  biography.textContent = `${data.bio}`
+  bio.textContent = `${carddata.bio}`
   cardinfo.appendChild(bio)
 
   return card;
 }
 
-const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell']
+const followersArray = ['tetondan','dustinmyers','justsml','luishrd','bigknell']
 i = 0;
-followersArray.forEach((user,i)=>{
-  axios.get('https://api.github.com/users/Rahmati1989')
+let folowerdata;
+followersArray.forEach((user)=>{
+  // console.log(user)
+  axios.get(`https://api.github.com/users/${user}`)
   .then((response)=>{
-    const data = response.data
-    const divcard = document.querySelector('.card')
-    divcard.appendChild(cardMaker(data))
+    console.log(response)
+  folowerdata = response.data
+    // const divcard = document.querySelector('.card')
+    const cardDiv = document.querySelector('.cards');
+  cardDiv.appendChild(cardMaker(folowerdata));
+  
   })
-  .catch(()=>{
+  .catch((erro)=>{
     console.log("Unsuccessfully loaded the card");
+    console.log(erro)
   })
 })
 
@@ -131,9 +138,9 @@ followersArray.forEach((user,i)=>{
 
 /*
   List of LS Instructors Github username's:
-    tetondan
-    dustinmyers
-    justsml
-    luishrd
-    bigknell
+    'tetondan'
+    'dustinmyers'
+    'justsml'
+    'luishrd'
+    'bigknell'
 */
